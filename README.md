@@ -56,7 +56,7 @@ Candidates are expected to design and implement the above APIs, adhering to REST
 
 ## Jump Start
 
-For your convenience, compose.yml includes Postgresql DB, the app is already pointing to this connection. In addition, you have the schema and data SQL files that can setup your DB schema and init data.
+For your convenience, docker-compose.yml includes Postgresql DB, the app is already pointing to this connection. In addition, you have the schema and data SQL files that can setup your DB schema and init data.
 
 ## Prerequisite
 
