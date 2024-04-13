@@ -23,15 +23,14 @@ Candidates are expected to design and implement the above APIs, adhering to REST
 ## APIs
 
 ### Restaurants APIs
-
 | API Description           | Endpoint                | Request Body                                             | Response Status | Response Body                                                                                           |
 |---------------------------|-------------------------|----------------------------------------------------------|-----------------|--------------------------------------------------------------------------------------------------------|
 | Get all restaurants       | GET /restaurants        |                                                          | 200 OK          | [{"id": "1","name": "Taizu","rating" : 4.83,"isKosher" : false,"cuisines": ["Asian","Mexican","Indian"]}] |
-| Get restaurants by cuisine| GET /restaurants?cuisine= |                                                         | 200 OK          | [{"id": "1","name": "Taizu","rating" : 4.83,"isKosher" : false,"cuisines": ["Asian","Mexican","Indian"]}] |
-| Get restaurant            | GET /restaurants/       |                                                          | 200 OK          | {"id": "1","name": "Taizu","rating" : 4.83,"isKosher" : false,"cuisines": ["Asian","Mexican","Indian"],"dishes": [{"id": "1","name": "Noodles","description": "Amazing one","price": 59}]} |
+| Get restaurants by cuisine| GET /restaurants?cuisine={cuisine} |                                                         | 200 OK          | [{"id": "1","name": "Taizu","rating" : 4.83,"isKosher" : false,"cuisines": ["Asian","Mexican","Indian"]}] |
+| Get restaurant            | GET /restaurants/{id}      |                                                          | 200 OK          | {"id": "1","name": "Taizu","rating" : 4.83,"isKosher" : false,"cuisines": ["Asian","Mexican","Indian"],"dishes": [{"id": "1","name": "Noodles","description": "Amazing one","price": 59}]} |
 | Add a restaurant          | POST /restaurants       | {"name": "Taizu","isKosher": false,"cuisines": ["Asian","Mexican","Indian"]} | 201 CREATED     |                                                                                                        |
-| Update a restaurant       | PUT /restaurants/       | {"cuisines": ["Asian"]}                                 | 200 OK          |                                                                                                        |
-| Delete a restaurant       | DELETE /restaurant/     |                                                          | 204 No Content  |                                                                                                        |
+| Update a restaurant       | PUT /restaurants/{id}     | {"cuisines": ["Asian"]}                                 | 200 OK          |                                                                                                        |
+| Delete a restaurant       | DELETE /restaurants/{id}    |                                                          | 204 No Content  |                                                                                                        |
 
 ### Ratings APIs
 
@@ -50,10 +49,10 @@ Candidates are expected to design and implement the above APIs, adhering to REST
 
 | API Description           | Endpoint                | Request Body                             | Response Status | Response Body                                                     |
 |---------------------------|-------------------------|------------------------------------------|-----------------|------------------------------------------------------------------|
-| Add a dish                | POST /restaurants//dishes | {"name":"Shakshuka","description":"Great one","price": 34} | 201 CREATED     |                                                                  |
-| Update a dish             | PUT /restaurants//dishes/ | {"description":"Great one","price": 34} | 200 OK          |                                                                  |
-| Delete a dish             | DELETE /restaurants//dishes/ |                                        | 204 No Content  |                                                                  |
-| Get dishes by a restaurant| GET /restaurants//dishes  |                                         | 200 OK          | [{"id":"1","name":"Humus","description":"Good one","price": 48}] |
+| Add a dish                | POST /restaurants/{id}/dishes | {"name":"Shakshuka","description":"Great one","price": 34} | 201 CREATED     |                                                                  |
+| Update a dish             | PUT /restaurants/{id}/dishes/{dishId} | {"description":"Great one","price": 34} | 200 OK          |                                                                  |
+| Delete a dish             | DELETE /restaurants/{id}/dishes/{dishId} |                                        | 204 No Content  |                                                                  |
+| Get dishes by a restaurant| GET /restaurants/{id}/dishes  |                                         | 200 OK          | [{"id":"1","name":"Humus","description":"Good one","price": 48}] |
 
 ## Jump Start
 
