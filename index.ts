@@ -1,6 +1,6 @@
 import express, { Application } from "express";
 import dotenv from "dotenv";
-import restaurantRouter from "./controllers/restaurantController";
+import restaurantRouter from "./Routes/restaurantRoute";
 import client from "./db/db";
 
 //For env File
