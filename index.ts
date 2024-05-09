@@ -1,6 +1,6 @@
 import express, { Application } from "express";
 import dotenv from "dotenv";
-import routes from "./controllers/demoController";
+import restaurantRouter from "./controllers/restaurantController";
 import client from "./db/db";
 
 //For env File
@@ -9,7 +9,7 @@ dotenv.config();
 const app: Application = express();
 const port = process.env.PORT || 8000;
 
-app.use("/", routes);
+app.use("/", restaurantRouter);
 
 app.listen(port, () => {
   console.log(`Server is On at http://localhost:${port}`);
