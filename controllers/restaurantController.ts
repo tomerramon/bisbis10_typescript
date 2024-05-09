@@ -27,7 +27,6 @@ const getRestaurantByID = async (req:Request, res:Response) =>{
 
 
 
-
 export default {
   getAllrRestaurants,
   getRestaurantByID,
