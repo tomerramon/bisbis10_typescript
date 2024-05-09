@@ -1,4 +1,7 @@
-CREATE TABLE example (
+CREATE TABLE IF NOT EXISTS restaurant (
     id SERIAL PRIMARY KEY,
-    data VARCHAR(255) NOT NULL
+    name VARCHAR(100),
+    averageRating Float,
+    isKosher BOOLEAN ,
+    cuisines VARCHAR(50)[]
 );
