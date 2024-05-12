@@ -42,10 +42,10 @@ const createNewRestaurant = async (req:Request, res:Response) =>{
     if (is_restaurant_exists.rows.length){
       return res.status(400).send("Restaurant already exists.");
     }
-    await client.query(queries.addRestaurant,[name,isKosher,cuisines]);
-    // await client.query("INSERT INTO dish (restaurant_id,name,description,price) VALUES (1,'sads','wowowowo',59.3)");
+    // await client.query(queries.addRestaurant,[name,isKosher,cuisines]);
+    await client.query("INSERT INTO dish (restaurant_id,name,description,price) VALUES (4,'sads','wowowowo',59.3)");
     const result = await client.query(queries.getAllRestaurants); 
-    return res.status(200).json(result.rows);
+    return res.status(201).json(result.rows);
   } 
   catch (error) {
       if(error instanceof Error){

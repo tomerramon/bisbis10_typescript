@@ -4,7 +4,7 @@ const restaurantRouter = Router();
 
 
 restaurantRouter.get("/", (req, res) => {
-    res.send("Welcome to restaurant route");
+    res.send("Welcome to AT&T restaurants home project.");
   });
   
   restaurantRouter.get("/restaurants", controller.getRestaurants);

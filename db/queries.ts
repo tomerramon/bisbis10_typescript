@@ -1,8 +1,12 @@
 // Queries file for all the SQL quries we send to the DATABASE to get our data back.
 
-const getAllRestaurants = "SELECT * FROM restaurant";
+const getAllRestaurants = `SELECT * FROM restaurant`;
 
-const getRestaurantByID = "SELECT * FROM restaurant WHERE id = $1";
+const getRestaurantByID = `SELECT r.*, 
+                            (SELECT ROW_TO_JSON(dish_obj) FROM (
+                               SELECT id,name,description,price FROM dish WHERE restaurant_id = r.id
+                                  ) dish_obj ) AS dishes 
+                            FROM restaurant r WHERE id = $1`;
 
 const getRestaurantsByCuisine = "SELECT * FROM restaurant WHERE $1 = ANY(cuisines)";
 
