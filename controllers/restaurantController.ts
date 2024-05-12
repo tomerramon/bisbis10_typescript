@@ -1,5 +1,6 @@
 import client from "../db/db";
 import { Request, Response } from "express";
+import queries from "../db/queries";
 
 
 const getRestaurants = async (req:Request, res:Response) =>{
@@ -8,10 +9,10 @@ const getRestaurants = async (req:Request, res:Response) =>{
     if (req.query.cuisine){
       const cuisine = req.query.cuisine.toString() //get the cuisine name the user entered and parse it to string.
       console.log(cuisine)
-      const result = await client.query("SELECT * FROM restaurant WHERE $1 = ANY(cuisines)",[cuisine]);  
+      const result = await client.query(queries.getRestaurantsByCuisine,[cuisine]);  
       return res.status(200).json(result.rows)
     }
-    const result = await client.query("SELECT * FROM restaurant"); 
+    const result = await client.query(queries.getAllRestaurants); 
     return res.status(200).json(result.rows)
   } 
   catch (error) {
@@ -24,7 +25,7 @@ const getRestaurants = async (req:Request, res:Response) =>{
 const getRestaurantByID = async (req:Request, res:Response) =>{
   try {
     const id = parseInt(req.params.id) //convert the paramters sent from string to int.
-    const result = await client.query("SELECT * FROM restaurant WHERE id = $1",[id]); 
+    const result = await client.query(queries.getRestaurantByID,[id]); 
     return res.status(200).json(result.rows)
   } 
   catch (error) {
@@ -41,9 +42,9 @@ const createNewRestaurant = async (req:Request, res:Response) =>{
     console.log(name,isKosher,cuisines)
     // check if the restaurant already exists.
     //is_restaurant_exists(name) -> 
-    await client.query("INSERT INTO restaurant (name,averageRating,isKosher,cuisines) VALUES ($1,$2,$3,$4)",[name,0.,isKosher,cuisines]);
+    await client.query(queries.addRestaurant,[name,0.,isKosher,cuisines]);
     // await client.query("INSERT INTO dish (restaurant_id,name,description,price) VALUES (1,'sads','wowowowo',59.3)");
-    const result = await client.query("SELECT * FROM restaurant"); 
+    const result = await client.query(queries.getAllRestaurants); 
     return res.status(200).json(result.rows);
   } 
   catch (error) {
