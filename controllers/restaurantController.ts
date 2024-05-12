@@ -40,8 +40,9 @@ const createNewRestaurant = async (req:Request, res:Response) =>{
     const {name, isKosher,cuisines } = req.body;
     console.log(name,isKosher,cuisines)
     // check if the restaurant already exists.
-    //
-    await client.query("INSERT INTO restaurant (name,isKosher,cuisines) VALUES ($1,$2,$3)",[name, isKosher,cuisines]);
+    //is_restaurant_exists(name) -> 
+    await client.query("INSERT INTO restaurant (name,averageRating,isKosher,cuisines) VALUES ($1,$2,$3,$4)",[name,0.,isKosher,cuisines]);
+    // await client.query("INSERT INTO dish (restaurant_id,name,description,price) VALUES (1,'sads','wowowowo',59.3)");
     const result = await client.query("SELECT * FROM restaurant"); 
     return res.status(200).json(result.rows);
   } 
