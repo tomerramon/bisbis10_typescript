@@ -1,6 +1,6 @@
 import express, { Application } from "express";
 import dotenv from "dotenv";
-import restaurantRouter from "./Routes/restaurantRoute";
+import restaurantRouter from "./Routes/restaurantRoutes";
 import client from "./db/db";
 
 //For env File
@@ -8,6 +8,7 @@ dotenv.config();
 
 const app: Application = express();
 const port = process.env.PORT || 8000;
+
 app.use(express.json());
 app.use("/", restaurantRouter);
 

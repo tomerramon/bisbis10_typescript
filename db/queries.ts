@@ -6,7 +6,9 @@ const getRestaurantByID = "SELECT * FROM restaurant WHERE id = $1";
 
 const getRestaurantsByCuisine = "SELECT * FROM restaurant WHERE $1 = ANY(cuisines)";
 
-const addRestaurant = "INSERT INTO restaurant (name,averageRating,isKosher,cuisines) VALUES ($1,$2,$3,$4)";
+const addRestaurant = "INSERT INTO restaurant (name,isKosher,cuisines) VALUES ($1,$2,$3)";
+
+const checkNameExists = "SELECT r FROM restaurant r WHERE r.name = $1";
 
 
 export default{
@@ -14,4 +16,6 @@ export default{
     getRestaurantByID,
     getRestaurantsByCuisine,
     addRestaurant,
+    checkNameExists,
+
 };

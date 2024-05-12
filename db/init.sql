@@ -1,17 +1,17 @@
 CREATE TABLE IF NOT EXISTS restaurant (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100),
-    averageRating Float,
-    isKosher BOOLEAN ,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    averageRating Float NOT NULL DEFAULT 0,
+    isKosher BOOLEAN NOT NULL,
     cuisines VARCHAR(50)[]
 );
 
 CREATE TABLE IF NOT EXISTS dish (
     id SERIAL PRIMARY KEY,
-    restaurant_id INT NOT NULL,
-    name VARCHAR(100),
-    description TEXT,
-    price Float ,
+    restaurant_id INTEGER NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    description TEXT NOT NULL,
+    price Float NOT NULL DEFAULT 0,
     CONSTRAINT fk_restaurant 
         FOREIGN KEY(restaurant_id) 
             REFERENCES restaurant(id) 
