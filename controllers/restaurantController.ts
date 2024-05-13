@@ -24,8 +24,11 @@ const getRestaurants = async (req:Request, res:Response) =>{
 const getRestaurantByID = async (req:Request, res:Response) =>{
   try {
     const id = parseInt(req.params.id) //convert the paramters sent from string to int.
-    const result = await client.query(queries.getRestaurantByID,[id]); 
-    return res.status(200).json(result.rows)
+    const result = await client.query(queries.getRestaurantByID,[id]);
+    if ( result.rowCount == 0){
+      return res.status(404).json({error: "Restaurant Not Found."})
+    } 
+    return res.status(200).json(result.rows[0])
   } 
   catch (error) {
       if(error instanceof Error){
@@ -37,15 +40,18 @@ const getRestaurantByID = async (req:Request, res:Response) =>{
 const createNewRestaurant = async (req:Request, res:Response) =>{
   try {
     const {name, isKosher,cuisines } = req.body;
+    //check there is no missing values for the new restaurant insert.
+    if ( name == null || isKosher == null || cuisines == null ){
+      return res.status(422).json({error : "Some values are missing...\n\t\tValues for:'name', 'isKosher','cuisines' are required."})
+    } 
     // check if the restaurant already exists, cant have 2 restaurant with the same name.
     const is_restaurant_exists = await client.query(queries.checkNameExists,[name]);
     if (is_restaurant_exists.rows.length){
-      return res.status(400).send("Restaurant already exists.");
+      return res.status(400).json({ error: `Restaurant ${name} already exists.` });
     }
-    // await client.query(queries.addRestaurant,[name,isKosher,cuisines]);
-    await client.query("INSERT INTO dish (restaurant_id,name,description,price) VALUES (4,'sads','wowowowo',59.3)");
-    const result = await client.query(queries.getAllRestaurants); 
-    return res.status(201).json(result.rows);
+    const result = await client.query(queries.addRestaurant,[name,isKosher,cuisines]);
+    // await client.query("INSERT INTO dish (restaurant_id,name,description,price) VALUES (4,'sads','wowowowo',59.3)");
+    return res.status(201).json(result.rows[0]);
   } 
   catch (error) {
       if(error instanceof Error){
@@ -64,3 +70,4 @@ export default {
 
 
 
+ 

@@ -1,6 +1,6 @@
 // Queries file for all the SQL quries we send to the DATABASE to get our data back.
 
-const getAllRestaurants = "SELECT * FROM restaurant";
+const getAllRestaurants = "SELECT * FROM restaurant ORDER BY id";
 
 const getRestaurantByID = `SELECT r.*, 
                             (SELECT ROW_TO_JSON(dish_obj) FROM (
@@ -10,7 +10,7 @@ const getRestaurantByID = `SELECT r.*,
 
 const getRestaurantsByCuisine = "SELECT * FROM restaurant WHERE $1 = ANY(cuisines)";
 
-const addRestaurant = "INSERT INTO restaurant (name,isKosher,cuisines) VALUES ($1,$2,$3)";
+const addRestaurant = "INSERT INTO restaurant (name,isKosher,cuisines) VALUES ($1,$2,$3) RETURNING *";
 
 const checkNameExists = "SELECT r FROM restaurant r WHERE r.name = $1";
 
