@@ -33,14 +33,10 @@ const createNewDish = async (req:Request, res:Response) =>{
         if ( !price ){
             return res.status(422).json({error : "'price' value is required"});
         }
-        if (!restaurantId){
-            return res.status(422).json({error : "'restaurantId' value is required"})
-        }else{
-            //checks if the restaurant Id provided exists in the database.
-            const is_restaurant_exists = await client.query(queries.checkRestaurantExistsById,[restaurantId]);
-            if (!is_restaurant_exists.rows[0].exists){
-              return res.status(400).json({ error: "Restaurant id not found." });
-            }
+        //checks if the restaurant Id provided exists in the database.
+        const is_restaurant_exists = await client.query(queries.checkRestaurantExistsById,[restaurantId]);
+        if (!is_restaurant_exists.rows[0].exists){
+            return res.status(400).json({ error: "Restaurant id not found." });
         }
         const result = await client.query(queries.addDish,[restaurantId,name,description,price]);
         return res.status(201).json(result.rows[0]);
@@ -65,14 +61,10 @@ const updateDish = async (req:Request, res:Response) =>{
         if ( !price ){
             return res.status(422).json({error : "'price' value is required"});
         }
-        if (!dishId){
-            return res.status(422).json({error : "'dishId' value is required"})
-        }else{
-            //checks if the dish id provided exists in the database.
-            const is_restaurant_exists = await client.query(queries.checkDishExistsById,[dishId]);
-            if (!is_restaurant_exists.rows[0].exists){
-              return res.status(400).json({ error: "Dish id not found." });
-            }
+          //checks if the dish exists in the database.
+        const is_dish_exists = await client.query(queries.checkDishExistsById,[dishId]);
+        if (!is_dish_exists.rows[0].exists){
+          return res.status(400).json({ error: "Dish id not found." });
         }
         //update the dish
         const result = await client.query(queries.updateDish,[description,price,dishId]);

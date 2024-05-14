@@ -20,7 +20,9 @@ const checkNameExists = "SELECT EXISTS (SELECT r FROM restaurant r WHERE r.name 
 
 const checkRestaurantExistsById = "SELECT EXISTS (SELECT r FROM restaurant r WHERE r.id = $1)";
 
-// const updateRestaurantCuisine = "";
+const updateRestaurantCuisine = "UPDATE restaurant SET cuisines = $1 WHERE id = $2 RETURNING *";;
+
+const deleteRestaurantById = "DELETE FROM restaurant WHERE id = $1";
 
 
 // ===================== DISHES QURIES =============================================================
@@ -40,7 +42,8 @@ export default{
     addRestaurant,
     checkNameExists,
     checkRestaurantExistsById,
-    // updateRestaurantCuisine,
+    updateRestaurantCuisine,
+    deleteRestaurantById,
     getAllDishesInRestaurant,
     addDish,
     checkDishExistsById,

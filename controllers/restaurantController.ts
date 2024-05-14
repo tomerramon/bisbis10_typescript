@@ -60,27 +60,59 @@ const createNewRestaurant = async (req:Request, res:Response) =>{
 }
 
 
-// const updateRestaurantCuisine = async (req:Request, res:Response) =>{
-//   try {
-//     const id = parseInt(req.params.id) //convert the paramters sent from string to int.
-//     const result = await client.query("SELECT * FROM restaurant WHERE id = $1 RETURNING *",[id]);
-//     console.log(result)
+const updateRestaurantCuisine = async (req:Request, res:Response) =>{
+  try {
+    const restaurantId = parseInt(req.params.id) //convert the paramters sent from string to int.
+    const arr = ["Asian","Mexican","Indian"];
+
+    //checks if the restaurant Id provided exists in the database.
+    const is_restaurant_exists = await client.query(queries.getRestaurantByID,[restaurantId]);
+    if (!is_restaurant_exists.rows.length){
+      return res.status(400).json({ error: "Restaurant id not found." });
+    }
+    const restaurant  = is_restaurant_exists.rows[0]
+    arr.forEach(c => {
+      if(!restaurant.cuisines.includes(c))
+        restaurant.cuisines.push(c);
+    });
+    //update the Restaurant Cuisines
+    const result = await client.query(queries.updateRestaurantCuisine,[restaurant.cuisines,restaurantId]);
+    return res.status(200).json(result.rows[0]);
+  } catch (error) {
+    if(error instanceof Error){
+      return res.status(500).json({error:error.message});
+  }
+  }
+};
+
+const deleteRestaurant = async (req:Request, res:Response) =>{
+  try {
+      const restaurantId = parseInt(req.params.id) //convert the paramters sent from string to int.
+      //checks if the restaurant Id provided exists in the database.
+      const is_restaurant_exists = await client.query(queries.checkRestaurantExistsById,[restaurantId]);
+      if (!is_restaurant_exists.rows[0].exists){
+          return res.status(400).json({ error: "Restaurant id not found." });
+      }
+      const result = await client.query(queries.deleteRestaurantById,[restaurantId]) ;
+      if (result.rowCount == 0 ){
+        return res.status(400).json({ error: "Restaurant id not found. Could not delete restsurant." });
+      }
+      return res.status(204).send();
+    } catch (error) {
+      if(error instanceof Error){
+        return res.status(500).json({error:error.message});
+    }
     
-//   } catch (error) {
-//     if(error instanceof Error){
-//       return res.status(500).json({error:error.message});
-//   }
-//   }
-// };
-
-
+  }
+}
 
 
 export default {
   getRestaurants,
   getRestaurantByID,
   createNewRestaurant,
-  // updateRestaurantCuisine,
+  updateRestaurantCuisine,
+  deleteRestaurant,
 };
 
 
