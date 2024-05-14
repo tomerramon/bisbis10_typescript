@@ -42,15 +42,14 @@ const createNewRestaurant = async (req:Request, res:Response) =>{
     const {name, isKosher,cuisines } = req.body;
     //check there is no missing values for the new restaurant insert.
     if ( name == null || isKosher == null || cuisines == null ){
-      return res.status(422).json({error : "Some values are missing...\n\t\tValues for:'name', 'isKosher','cuisines' are required."})
+      return res.status(422).json({error : "Some values are missing - Values for:'name', 'isKosher','cuisines' are required."})
     } 
     // check if the restaurant already exists, cant have 2 restaurant with the same name.
     const is_restaurant_exists = await client.query(queries.checkNameExists,[name]);
-    if (is_restaurant_exists.rows.length){
+    if (is_restaurant_exists.rows[0].exists){
       return res.status(400).json({ error: `Restaurant ${name} already exists.` });
     }
     const result = await client.query(queries.addRestaurant,[name,isKosher,cuisines]);
-    // await client.query("INSERT INTO dish (restaurant_id,name,description,price) VALUES (4,'sads','wowowowo',59.3)");
     return res.status(201).json(result.rows[0]);
   } 
   catch (error) {
@@ -61,11 +60,27 @@ const createNewRestaurant = async (req:Request, res:Response) =>{
 }
 
 
+// const updateRestaurantCuisine = async (req:Request, res:Response) =>{
+//   try {
+//     const id = parseInt(req.params.id) //convert the paramters sent from string to int.
+//     const result = await client.query("SELECT * FROM restaurant WHERE id = $1 RETURNING *",[id]);
+//     console.log(result)
+    
+//   } catch (error) {
+//     if(error instanceof Error){
+//       return res.status(500).json({error:error.message});
+//   }
+//   }
+// };
+
+
+
 
 export default {
   getRestaurants,
   getRestaurantByID,
   createNewRestaurant,
+  // updateRestaurantCuisine,
 };
 
 
