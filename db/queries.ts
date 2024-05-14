@@ -1,5 +1,7 @@
 // Queries file for all the SQL quries we send to the DATABASE to get our data back.
 
+
+// ===================== RESTAURANT QURIES =============================================================
 const getAllRestaurants = "SELECT * FROM restaurant ORDER BY id";
 
 const getRestaurantByID = `SELECT r.*, 
@@ -16,8 +18,20 @@ const addRestaurant = "INSERT INTO restaurant (name,isKosher,cuisines) VALUES ($
 
 const checkNameExists = "SELECT EXISTS (SELECT r FROM restaurant r WHERE r.name = $1)";
 
-const updateRestaurantCuisine = "";
+const checkRestaurantExistsById = "SELECT EXISTS (SELECT r FROM restaurant r WHERE r.id = $1)";
 
+// const updateRestaurantCuisine = "";
+
+
+// ===================== DISHES QURIES =============================================================
+
+const getAllDishesInRestaurant = "SELECT d.* FROM dish d WHERE d.restaurant_id = $1";
+
+const addDish = "INSERT INTO dish (restaurant_id,name,description,price) VALUES ($1,$2,$3,$4) RETURNING *";
+
+const updateDish = "UPDATE dish SET description = $1 ,price = $2 WHERE id = $3 RETURNING *";
+
+const checkDishExistsById = "SELECT EXISTS (SELECT d FROM dish d WHERE d.id = $1)";
 
 export default{
     getAllRestaurants,
@@ -25,9 +39,11 @@ export default{
     getRestaurantsByCuisine,
     addRestaurant,
     checkNameExists,
-    updateRestaurantCuisine
+    checkRestaurantExistsById,
+    // updateRestaurantCuisine,
+    getAllDishesInRestaurant,
+    addDish,
+    checkDishExistsById,
+    updateDish
 
 };
-
-
-    // await client.query("INSERT INTO dish (restaurant_id,name,description,price) VALUES (4,'sads','wowowowo',59.3)");

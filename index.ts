@@ -1,6 +1,7 @@
 import express, { Application } from "express";
 import dotenv from "dotenv";
 import restaurantRouter from "./Routes/restaurantRoutes";
+import dishRouter from "./Routes/dishRoutes";
 import client from "./db/db";
 
 //For env File
@@ -12,6 +13,8 @@ const port = process.env.PORT || 8000;
 app.use(express.json());
 
 app.use("/", restaurantRouter);
+app.use("/restaurants/:id/dishes", dishRouter);
+
 
 app.listen(port, () => {
   console.log(`Server is On at http://localhost:${port}`);
