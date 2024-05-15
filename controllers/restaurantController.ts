@@ -1,5 +1,5 @@
 import client from "../db/db";
-import { Request, Response } from "express";
+import e, { Request, Response } from "express";
 import queries from "../db/queries";
 
 
@@ -63,7 +63,7 @@ const createNewRestaurant = async (req:Request, res:Response) =>{
 const updateRestaurantCuisine = async (req:Request, res:Response) =>{
   try {
     const restaurantId = parseInt(req.params.id) //convert the paramters sent from string to int.
-    const arr = ["Asian","Mexican","Indian"];
+    const cuisines = req.body.cuisines as string[];
 
     //checks if the restaurant Id provided exists in the database.
     const is_restaurant_exists = await client.query(queries.getRestaurantByID,[restaurantId]);
@@ -71,7 +71,7 @@ const updateRestaurantCuisine = async (req:Request, res:Response) =>{
       return res.status(400).json({ error: "Restaurant id not found." });
     }
     const restaurant  = is_restaurant_exists.rows[0]
-    arr.forEach(c => {
+    cuisines.forEach(c => {
       if(!restaurant.cuisines.includes(c))
         restaurant.cuisines.push(c);
     });

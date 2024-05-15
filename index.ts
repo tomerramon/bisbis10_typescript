@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import dotenv from "dotenv";
 import restaurantRouter from "./Routes/restaurantRoutes";
 import dishRouter from "./Routes/dishRoutes";
+import rateRouter from "./Routes/rateRoutes";
 import client from "./db/db";
 
 //For env File
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use("/", restaurantRouter);
 app.use("/restaurants/:id/dishes", dishRouter);
+app.use("/ratings", rateRouter);
 
 
 app.listen(port, () => {

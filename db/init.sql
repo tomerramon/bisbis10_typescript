@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS restaurant (
     cuisines VARCHAR(50)[]
 );
 
+
+
 CREATE TABLE IF NOT EXISTS dish (
     id SERIAL PRIMARY KEY,
     restaurant_id INTEGER NOT NULL,
@@ -18,11 +20,30 @@ CREATE TABLE IF NOT EXISTS dish (
                 ON DELETE CASCADE
 );
 
--- ALTER TABLE restaurant
--- ADD dishes VARCHAR(255)
+
+CREATE TABLE IF NOT EXISTS rate (
+    id SERIAL PRIMARY KEY,
+    restaurant_id INTEGER NOT NULL UNIQUE,
+    num_raters INTEGER NOT NULL DEFAULT 0,
+    averageRating Float NOT NULL DEFAULT 0,
+    CONSTRAINT fk_restaurant 
+        FOREIGN KEY(restaurant_id) 
+            REFERENCES restaurant(id) 
+                ON DELETE CASCADE
+);
+
+-- new table order{
+-- restaurantId -> int
+-- order id
+-- detalies (dishes, amount)
+-- }
 
 
-
+-- table order items{
+--     order id
+--     dishid
+--     amount
+-- }
 -- [
 -- {
 -- "id": 1,
@@ -47,3 +68,8 @@ CREATE TABLE IF NOT EXISTS dish (
 -- ]
 -- }
 -- ]
+
+
+
+-- lucidchart => UML website
+-- elasticsearch
