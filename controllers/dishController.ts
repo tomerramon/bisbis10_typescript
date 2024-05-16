@@ -88,31 +88,32 @@ const updateDish = async (req:Request, res:Response) =>{
 }
 
 
-// const deleteDish = async (req:Request, res:Response) =>{
-//     try {
-//         const dishId = parseInt(req.params.dishId) //convert the paramters sent from string to int.
-//         //checks if the restaurant Id provided exists in the database.
-//         const is_restaurant_exists = await client.query(queries.checkRestaurantExistsById,[restaurantId]);
-//         if (!is_restaurant_exists.rows[0].exists){
-//             return res.status(400).json({ error: "Restaurant id not found." });
-//         }
-//         const result = await client.query(queries.deleteRestaurantById,[restaurantId]) ;
-//         if (result.rowCount == 0 ){
-//           return res.status(400).json({ error: "Restaurant id not found. Could not delete restsurant." });
-//         }
-//         return res.status(204).send();
-//       } catch (error) {
-//         if(error instanceof Error){
-//           return res.status(500).json({error:error.message});
-//       }
-      
-//     }
-//   }
+const deleteDish = async (req:Request, res:Response) =>{
+    try {
+        const dishId = parseInt(req.params.dishId) //convert the paramters sent from string to int.
+        //checks if the restaurant Id provided exists in the database.
+        const dish_exists = await client.query(queries.checkDishExistsById,[dishId]);
+        if (!dish_exists.rows[0].exists){
+            return res.status(400).json({ error: "Dish id not found." });
+        }
+        const result = await client.query(queries.deleteDishById,[dishId]) ;
+        console.log(result)
+        if (result.rowCount == 0 ){
+          return res.status(400).json({ error: "Dish id not found. Could not delete dish." });
+        }
+        return res.status(204).send();
+      } catch (error) {
+        if(error instanceof Error){
+          return res.status(500).json({error:error.message});
+      }
+    }
+  }
+
   export default {
     getDishes,
     createNewDish,
     updateDish,
-    // deleteDish
+    deleteDish
   };
   
   

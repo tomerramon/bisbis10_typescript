@@ -5,12 +5,6 @@ import queries from "../db/queries";
 
 const postRating = async (req:Request, res:Response) =>{
     try {
-        /* need to check id there is rating colums in the rate db with the given restaurant id
-        if there is need to update the number or raters and calculate the new avarege rating the update it also.
-        if no rating was found need to create new one with the values sent by the user .
-        after that need to send the new avarge to be updated in the restaurant table.
-        */
-        console.log(req.body)
         const { restaurantId, rating } = req.body;
         //check there is no missing values for the rating.
         if ( !restaurantId || !rating ){
@@ -23,22 +17,20 @@ const postRating = async (req:Request, res:Response) =>{
         }
         //checks if the restaurant Id provided exists in the 'rate' table in the DB.
         let result = await client.query(queries.getRatingByRestaurantId,[restaurantId])
+
         if ( !result.rows.length ){
             // if restaurant id not found -> create new record
            result = await client.query(queries.createNewRating,[restaurantId])
         }
         // Calculate the new average rating and update the rate table.
         const rate = result.rows[0];
-        console.log(rate)
-        const old_rating = rate.averagerating;
+        const old_rating = rate.averageRating;
         const num_raters = rate.num_raters;
         const new_rating = (((old_rating * num_raters) + rating) / (num_raters + 1)).toFixed(2);
         const update_rate = await client.query(queries.updateRate,[num_raters + 1 , new_rating,restaurantId ]) 
-
-        console.log(old_rating,num_raters,new_rating)
         //Finally the restaurants record is being updated with the new rating.
         result = await client.query(queries.updateRestaurantAverageRating,[new_rating,restaurantId])
-        return res.status(200).send();
+        return res.status(200).send(result.rows[0]);
     } 
     catch (error) {
         if(error instanceof Error){
