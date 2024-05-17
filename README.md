@@ -24,8 +24,6 @@ In that way the data is kept safe after the user stop the program and not been d
 ### DataBase Schema
 
 ![image](https://github.com/tomerramon/bisbis10_typescript/assets/80204348/4ff4ec8d-2123-4cfe-84e0-aa974783e70f)
-
-  https://lucid.app/lucidchart/144b031d-db05-4c62-a2ab-cebf63d82ace/edit?view_items=awKCKqtWD.wu%2C5kKCSPwERTsy%2C5kKCH4sgEddJ%2CYsKCDBC9W_Aj%2CoxKCMPlJ2WHr%2C3wKCi.12uaPC%2CBsKCDLJD8C6b%2C-      uKCQIq7S1AE%2C5yKCgyvPQr8z&invitationId=inv_8f1feef9-34af-4186-afd8-7049508aa987
   
 ## Overview
 
