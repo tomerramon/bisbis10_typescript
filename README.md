@@ -22,8 +22,7 @@ In that way the data is kept safe after the user stop the program and not been d
 
 
 ### DataBase Schema
-
-![image](https://github.com/tomerramon/bisbis10_typescript/assets/80204348/4ff4ec8d-2123-4cfe-84e0-aa974783e70f)
+![image](https://github.com/tomerramon/bisbis10_typescript/assets/80204348/e7e88c85-1e7c-4c55-8823-1449c936b64a)
   
 ## Overview
 
