@@ -1,5 +1,29 @@
 # Restaurant Management System
 
+## Personal Over View
+
+### steps to start the project on the local machine
+
+    1. Check docker (docker desktop) is installed on your machine.
+    2. Check Node js is installed on your machine.
+    3. clone the projects repo to your local machine.
+    4. open the project folder and run the following commands:
+        a. run "docker compose up -d " -> for create the docker image and to run the container.
+        (this command will create init the database "init" file to create the right tables in the database for this project.)
+        
+        b. run "npm run dev" to start the connections and to be able to send requests to the server. (allows auto start after changes are made.)
+    5. Finally, check that the connection to the server and the database is up and your are ready.
+
+
+### Technical Aspects
+The system is built using JavaScript, Node js Express, for creating the RESTful APIs.
+For the data the system uses PostgreSQL to save all the data in database tables.
+In that way the data is kept safe after the user stop the program and not been deleted like in-memory.
+
+
+### DataBase Schema
+![image](https://github.com/tomerramon/bisbis10_typescript/assets/80204348/e7e88c85-1e7c-4c55-8823-1449c936b64a)
+  
 ## Overview
 
 The bisbis10 restaurant management system is a backend service designed to handle various operations related to restaurants, their dishes, and ratings. The system aims to provide a comprehensive platform for managing restaurant data, including details about the restaurants, their cuisines, dishes, and customer ratings.
