@@ -24,9 +24,7 @@ const getRestaurants = async (req:Request, res:Response) =>{
 const getRestaurantByID = async (req:Request, res:Response) =>{
   try {
     const id = parseInt(req.params.id) //convert the paramters sent from string to int.
-    console.log(id);
     const result = await client.query(queries.getRestaurantByID,[id]);
-    console.log(result);
     if ( result.rowCount == 0){
       return res.status(404).json({error: "Restaurant Not Found."})
     } 
@@ -42,7 +40,6 @@ const getRestaurantByID = async (req:Request, res:Response) =>{
 const createNewRestaurant = async (req:Request, res:Response) =>{
   try {
     const {name, isKosher,cuisines } = req.body;
-    console.log(req.body)
     //check there is no missing values for the new restaurant insert.
     if ( name == null || isKosher == null || cuisines == null ){
       return res.status(422).json({error : "Some values are missing - Values for:'name', 'isKosher','cuisines' are required."})
