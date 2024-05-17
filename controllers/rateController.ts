@@ -30,7 +30,7 @@ const postRating = async (req:Request, res:Response) =>{
         const update_rate = await client.query(queries.updateRate,[num_raters + 1 , new_rating,restaurantId ]) 
         //Finally the restaurants record is being updated with the new rating.
         result = await client.query(queries.updateRestaurantAverageRating,[new_rating,restaurantId])
-        return res.status(200).send(result.rows[0]);
+        return res.status(200).send();
     } 
     catch (error) {
         if(error instanceof Error){

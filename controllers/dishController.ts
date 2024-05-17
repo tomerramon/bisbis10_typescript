@@ -9,8 +9,7 @@ const getDishes = async (req:Request, res:Response) =>{
         if (!id){
             return res.status(422).json({error : "Missing argument(s)... ID value must be provided."})
         } 
-        const result = await client.query(queries.getAllDishesInRestaurant,[id]); 
-        
+        const result = await client.query(queries.getAllDishesInRestaurant,[id]);      
         return res.status(200).json(result.rows)
     } 
     catch (error) {
@@ -96,6 +95,7 @@ const deleteDish = async (req:Request, res:Response) =>{
         }
         const result = await client.query(queries.deleteDishById,[dishId]) ;
         if (result.rowCount == 0 ){
+            // verify that the row deleted.
           return res.status(400).json({ error: "Dish id not found. Could not delete dish." });
         }
         return res.status(204).send();

@@ -25,7 +25,7 @@ const sendOrder = async (req:Request, res:Response) =>{
              //for each order item we check that the dish really exists in the dish table.
              const dish_exists = await client.query(queries.checkDishExistsById,[item.dish_id]);
              if (!dish_exists.rows[0].exists){
-                await client.query(queries.deleteOrderById,[order.rows[0].orderId]);
+                await client.query(queries.deleteOrderById,[order.rows[0].orderId]); //if the dish id not exists delete the new order created and return with error message.
                 return res.status(400).json({ error: "Dish not found or not exists." });
              }
              await client.query(queries.createNewOrderItem,[order.rows[0].orderId,item.dishId, item.amount]); // create new order item

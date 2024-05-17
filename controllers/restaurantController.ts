@@ -6,12 +6,12 @@ import queries from "../db/queries";
 const getRestaurants = async (req:Request, res:Response) =>{
   try {
     // check if the user entered cuisine to search the restaurants by.
-    if (req.query.cuisine){
+    if (req.query.cuisine){//if the user send cuisine name return all the restaurants with that cuisine.
       const cuisine = req.query.cuisine.toString() //get the cuisine name the user entered and parse it to string.
       const result = await client.query(queries.getRestaurantsByCuisine,[cuisine]);  
       return res.status(200).json(result.rows)
     }
-    const result = await client.query(queries.getAllRestaurants); 
+    const result = await client.query(queries.getAllRestaurants); // if no cuisine sent return all the restaurants in the database.
     return res.status(200).json(result.rows)
   } 
   catch (error) {
@@ -25,7 +25,7 @@ const getRestaurantByID = async (req:Request, res:Response) =>{
   try {
     const id = parseInt(req.params.id) //convert the paramters sent from string to int.
     const result = await client.query(queries.getRestaurantByID,[id]);
-    if ( result.rowCount == 0){
+    if (result.rowCount == 0){
       return res.status(404).json({error: "Restaurant Not Found."})
     } 
     return res.status(200).json(result.rows[0]);
@@ -50,7 +50,7 @@ const createNewRestaurant = async (req:Request, res:Response) =>{
       return res.status(400).json({ error: `Restaurant ${name} already exists.` });
     }
     const result = await client.query(queries.addRestaurant,[name,isKosher,cuisines]);
-    return res.status(201).json(result.rows[0]);
+    return res.status(201).send();
   } 
   catch (error) {
       if(error instanceof Error){
@@ -77,7 +77,7 @@ const updateRestaurantCuisine = async (req:Request, res:Response) =>{
     });
     //update the Restaurant Cuisines
     const result = await client.query(queries.updateRestaurantCuisine,[restaurant.cuisines,restaurantId]);
-    return res.status(200).json(result.rows[0]);
+    return res.status(200).send();
   } catch (error) {
     if(error instanceof Error){
       return res.status(500).json({error:error.message});
