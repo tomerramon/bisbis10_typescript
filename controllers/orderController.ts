@@ -23,11 +23,14 @@ const sendOrder = async (req:Request, res:Response) =>{
         for (let i = 0; i < orderItems.length; i++) {
             const item = orderItems[i];
              //for each order item we check that the dish really exists in the dish table.
-             const dish_exists = await client.query(queries.checkDishExistsById,[item.dish_id]);
-             if (!dish_exists.rows[0].exists){
+             const dish_exists = await client.query(queries.getDishById,[item.dishId]);
+             if (!dish_exists.rows.length){
                 await client.query(queries.deleteOrderById,[order.rows[0].orderId]); //if the dish id not exists delete the new order created and return with error message.
                 return res.status(400).json({ error: "Dish not found or not exists." });
-             }
+             }else if(dish_exists.rows[0].restaurant_id != restaurantId) {
+                await client.query(queries.deleteOrderById,[order.rows[0].orderId]); //if the restaurant doesn't have the asked dish delete the new order created.
+                return res.status(422).json({error : "The restaurant doen not provide this dish."});
+            }
              await client.query(queries.createNewOrderItem,[order.rows[0].orderId,item.dishId, item.amount]); // create new order item
         }
         return res.status(200).json({'orderId': order.rows[0].orderId});

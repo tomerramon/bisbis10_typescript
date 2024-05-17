@@ -41,7 +41,7 @@ const createNewRestaurant = async (req:Request, res:Response) =>{
   try {
     const {name, isKosher,cuisines } = req.body;
     //check there is no missing values for the new restaurant insert.
-    if ( name == null || isKosher == null || cuisines == null ){
+    if ( !name|| isKosher == null || !cuisines ){
       return res.status(422).json({error : "Some values are missing - Values for:'name', 'isKosher','cuisines' are required."})
     } 
     // check if the restaurant already exists, cant have 2 restaurant with the same name.
