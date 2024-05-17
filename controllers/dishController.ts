@@ -44,7 +44,6 @@ const createNewDish = async (req:Request, res:Response) =>{
     } 
     catch (error) {
         if(error instanceof Error){
-            console.log(req.body)
             return res.status(500).json({error:error.message});
       }
     }
@@ -81,7 +80,6 @@ const updateDish = async (req:Request, res:Response) =>{
         return res.status(200).json(result.rows[0]);
     } catch (error) {
         if(error instanceof Error){
-            console.log(req.body)
             return res.status(500).json({error:error.message});
         }    
     }
@@ -97,7 +95,6 @@ const deleteDish = async (req:Request, res:Response) =>{
             return res.status(400).json({ error: "Dish id not found." });
         }
         const result = await client.query(queries.deleteDishById,[dishId]) ;
-        console.log(result)
         if (result.rowCount == 0 ){
           return res.status(400).json({ error: "Dish id not found. Could not delete dish." });
         }

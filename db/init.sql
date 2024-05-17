@@ -52,36 +52,3 @@ CREATE TABLE IF NOT EXISTS "order_item" (
             REFERENCES "order"("orderId") 
                 ON DELETE CASCADE
 );
-
-
-
--- [
--- {
--- "id": 1,
--- "name": "Taizu",
--- "averagerating": 4.83,
--- "iskosher": false,
--- "cuisines": [
--- "Israeli",
--- "Arab"
--- ]
--- },
-
--- {
--- "id": 2,
--- "name": "OCD",
--- "averagerating": null,
--- "iskosher": true,
--- "cuisines": [
--- "Asian",
--- "Mexican",
--- "Indian",
--- "Arab"
--- ]
--- }
--- ]
-
-
-
--- lucidchart => UML website
--- elasticsearch
